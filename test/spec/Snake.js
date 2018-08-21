@@ -1,18 +1,22 @@
 import Snake from '../../src/Snake';
+import position from '../mock/position'
 
 describe('Snake', () => {
+  const snake = new Snake(position);
+  describe('#constructor', () => {
+    expect(snake).toHaveProperty('position', expect.arrayContaining(
+      expect.objectContaining({
+        x: expect.any(Number),
+        y: expect.any(Number),
+      }),
+    ));
+  });
 
-    describe('#constructor', () => {
-        const snake = new Snake();
-        expect(snake).toHaveProperty('length');
-        expect(snake).toHaveProperty('direction');
-    });
+  describe('#getControls');
 
-    describe('#getControls');
+  describe('#grow');
 
-    describe('#grow');
+  describe('#setDirection');
 
-    describe("#setDirection");
-
-    describe("#getDirection");
+  describe('#getDirection');
 });
