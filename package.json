@@ -1,0 +1,44 @@
+{
+  "name": "snake",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "npm run test -- --watch",
+    "lint": "eslint .",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/dip-in-milk/snake.git"
+  },
+  "keywords": [
+    "snake",
+    "game"
+  ],
+  "author": "Stefan Teneff <st.teneff@dip-in-milk.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://gitlab.com/dip-in-milk/snake/issues"
+  },
+  "homepage": "https://gitlab.com/dip-in-milk/snake#readme",
+  "devDependencies": {
+    "@babel/core": "^7.0.0-rc.1",
+    "@babel/plugin-transform-runtime": "^7.0.0-rc.1",
+    "@babel/preset-env": "^7.0.0-rc.1",
+    "@babel/runtime": "^7.0.0-rc.1",
+    "babel-core": "^7.0.0-bridge.0",
+    "eslint": "^5.4.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "jest": "^23.5.0"
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env"
+    ],
+    "plugins": [
+      "@babel/plugin-transform-runtime"
+    ]
+  }
+}
