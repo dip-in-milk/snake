@@ -1,0 +1,40 @@
+image: node:latest
+
+cache:
+  untracked: true
+  paths:
+    - node_modules/
+
+stages:
+  - setup
+  - build
+  - deploy
+
+dependencies:
+  stage: setup
+  script:
+    - npm i
+
+lint:
+  stage: build
+  script:
+    - npm run lint
+
+test:
+  stage: build
+  script:
+    - npm run test
+  artifacts:
+    paths:
+      - coverage/
+
+pages: 
+  stage: deploy
+  script:
+    - mv coverage/ public/
+  artifacts:
+    paths:
+      - public/
+    expire_in: 30 days
+  only:
+    - master

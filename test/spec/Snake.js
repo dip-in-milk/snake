@@ -1,5 +1,5 @@
 import Snake from '../../src/Snake';
-import position from '../mock/position'
+import position from '../mock/position';
 
 describe('Snake', () => {
   const snake = new Snake(position);

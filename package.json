@@ -5,8 +5,8 @@
   "main": "src/index.js",
   "scripts": {
     "start": "npm run test -- --watch --color",
-    "lint": "eslint --color .",
-    "test": "jest"
+    "lint": "eslint --color --ignore-path .gitignore .",
+    "test": "jest --color"
   },
   "repository": {
     "type": "git",

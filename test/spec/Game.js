@@ -31,8 +31,6 @@ describe('Game', () => {
   });
 
   describe('#tick', () => {
-    const oldState = game.state;
-
     game.tick();
 
     it('should call player.tick() for each gameObject', () => {
