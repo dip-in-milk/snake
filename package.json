@@ -1,5 +1,5 @@
 {
-  "name": "snake",
+  "name": "@dip-in-milk/snake",
   "version": "1.0.0",
   "description": "",
   "main": "src/index.js",
