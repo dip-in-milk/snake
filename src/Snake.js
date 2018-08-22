@@ -1,4 +1,3 @@
-import Pixel from './Pixel';
 import DIRECTION from './DIRECTION';
 
 export default class Snake {

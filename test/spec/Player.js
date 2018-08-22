@@ -1,5 +1,4 @@
 import Player from '../../src/Player';
-import Snake from '../../src/Snake';
 
 const mockControls = {};
 const mockGame = {};
