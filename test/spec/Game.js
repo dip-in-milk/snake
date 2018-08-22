@@ -2,6 +2,8 @@ import Game from '../../src/Game';
 import Player from '../../src/Player';
 import mockSprite from '../mock/player/sprite';
 
+import Sprite from '../mock/Sprite';
+
 jest.mock('../../src/Player', () => jest.fn().mockImplementation(() => ({
   tick: jest.fn(),
   getSprite: jest.fn().mockReturnValue(mockSprite),
@@ -11,13 +13,6 @@ const players = {
   player1: new Player(),
   player2: new Player(),
 };
-
-const Pixel = expect.objectContaining({
-  x: expect.any(Number),
-  y: expect.any(Number),
-});
-
-const Sprite = expect.arrayContaining([Pixel]);
 
 describe('Game', () => {
   const game = new Game(Object.values(players));
