@@ -15,10 +15,10 @@ dependencies:
   script:
     - npm i
 
-lint:
-  stage: build
-  script:
-    - npm run lint
+# lint:
+#   stage: build
+#   script:
+#     - npm run lint
 
 test:
   stage: build

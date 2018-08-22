@@ -6,6 +6,7 @@
   "scripts": {
     "start": "npm run test -- --watch --color",
     "lint": "eslint --color --ignore-path .gitignore .",
+    "pretest": "npm run lint",
     "test": "jest --color"
   },
   "repository": {
