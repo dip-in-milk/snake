@@ -24,6 +24,7 @@ test:
   stage: build
   script:
     - npm run test
+  coverage: /All files[^\|]*\|[^\|]*\s+([\d\.]+)/
   artifacts:
     paths:
       - coverage/
