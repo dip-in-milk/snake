@@ -1,32 +1,26 @@
-import DIRECTION from './DIRECTION';
+import ControllableGameObject from './ControllableGameObject';
 
-export default class Snake {
-  constructor(sprite) {
-    this.sprite = sprite;
-    this.direction = [DIRECTION.UP];
+export default class Snake extends ControllableGameObject {
+  constructor(player) {
+    super(player.game);
+    this.player = player;
   }
 
-  getControls() {
-    return [{
-      label: 'up',
-      method: () => {
-        this.direction = DIRECTION.UP;
-      },
-    }, {
-      label: 'down',
-      method: () => {
-        this.direction = DIRECTION.DOWN;
-      },
-    }, {
-      label: 'left',
-      method: () => {
-        this.direction = DIRECTION.LEFT;
-      },
-    }, {
-      label: 'right',
-      method: () => {
-        this.direction = DIRECTION.RIGHT;
-      },
-    }];
+  move(direction) {
+    let nextDistance = direction;
+    this.sprite.forEach((pixel, i, sprite) => {
+      const distance = pixel.getRelativeDistance(sprite[i + 1]);
+      pixel.move(nextDistance);
+      nextDistance = distance;
+    });
+  }
+
+  tick() {
+    this.move(this.direction);
+
+    this.game.getObjectsOnPixels(this.sprite)
+      .forEach((gameObject) => {
+        this.collide(gameObject);
+      });
   }
 }

@@ -1,7 +1,20 @@
-import Pixel from './Pixel';
+import Pixel from '../../src/Pixel';
 
-const Sprite = expect.arrayContaining([
-  Pixel,
-]);
+// jest.mock('../../src/Pixel', () => jest.fn().mockImplementation(() => ({
+//   x: 5,
+//   y: 5,
+//   createSibling: () => jest.fn(),
+// })));
 
-export default Sprite;
+jest.mock('../../src/Pixel');
+
+const snake = [
+  new Pixel(),
+  new Pixel(),
+  new Pixel(),
+  new Pixel(),
+];
+
+export default {
+  snake,
+};

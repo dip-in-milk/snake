@@ -4,7 +4,7 @@
   "description": "",
   "main": "src/index.js",
   "scripts": {
-    "start": "npm run test -- --watch --color",
+    "start": "node --inspect ./node_modules/jest/bin/jest --watch --color --verbose=false",
     "lint": "eslint --color --ignore-path .gitignore .",
     "pretest": "npm run lint",
     "test": "jest --color"

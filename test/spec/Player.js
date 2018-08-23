@@ -1,27 +1,31 @@
 import Player from '../../src/Player';
+import Game from '../../src/Game';
+import ControllableGameObject from '../../src/ControllableGameObject';
 
-const mockControls = {};
-const mockGame = {};
+jest.mock('../../src/Game');
+jest.mock('../../src/ControllableGameObject');
 
-jest.mock('../../src/Snake', () => jest.fn().mockImplementation(() => ({
-  getControls: jest.fn(() => mockControls),
-})));
+const mockGame = new Game();
+const mockGameObject = new ControllableGameObject();
 
 describe('Player', () => {
-  const player = new Player(mockGame);
+  const player = new Player();
 
-  it('should have game property', () => {
-    expect(player).toHaveProperty('game', mockGame);
-  });
+  describe('#join', () => {
+    player.join(mockGame, mockGameObject);
+    it('should be assigned to a game', () => {
+      expect(player).toHaveProperty('game', mockGame);
+    });
 
-  it('should have snake', () => {
-    expect(player).toHaveProperty('snake', expect.any(Object));
+    it('should be given a gameObject', () => {
+      expect(player).toHaveProperty('gameObject', mockGameObject);
+    });
   });
 
   describe('#getControls', () => {
-    it('should get snake controls', () => {
-      expect(player.getControls()).toEqual(mockControls);
-      expect(player.snake.getControls).toBeCalled();
+    it('should call player.gameObject.getControls', () => {
+      player.getControls();
+      expect(player.gameObject.getControls).toBeCalled();
     });
   });
 });

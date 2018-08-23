@@ -1,12 +1,10 @@
-import Snake from './Snake';
-
 export default class Player {
-  constructor(game) {
+  join(game, gameObject) {
     this.game = game;
-    this.snake = new Snake();
+    this.gameObject = gameObject;
   }
 
   getControls() {
-    return this.snake.getControls();
+    return this.gameObject.getControls();
   }
 }
