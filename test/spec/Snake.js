@@ -1,5 +1,4 @@
 import Snake from '../../src/Snake';
-import mockSprite from '../mock/sprite';
 
 import Game from '../../src/Game';
 import GameObject from '../../src/GameObject';
@@ -57,7 +56,7 @@ describe('Snake', () => {
         snake.player.game.getObjectsOnPixels.mockReturnValue([
           new Snake({
             game: mockGame,
-          }, mockSprite),
+          }),
         ]);
       });
 
