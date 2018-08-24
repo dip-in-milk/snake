@@ -13,6 +13,7 @@ stages:
 dependencies:
   stage: setup
   script:
+    - npm i -g npm@latest
     - npm i
 
 # lint:
