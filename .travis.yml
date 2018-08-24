@@ -6,6 +6,9 @@ cache:
   - node_modules
 before_install:
 - npm i -g npm@latest
+
+after_script: "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
+
 script: npm test
 notifications:
   slack:
