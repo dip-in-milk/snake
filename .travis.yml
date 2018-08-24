@@ -1,12 +1,12 @@
 language: node_js
 node_js:
-  - "10.8"
-
+- '10.8'
 cache:
   directories:
-    - "node_modules"
-
+  - node_modules
 before_install:
-  - npm i -g npm@latest
-
+- npm i -g npm@latest
 script: npm test
+notifications:
+  slack:
+    secure: v07AZbnqmbVDQgX+EMNNm9p3Vlg5HRVCheRb0W/2D/+Ht2RHRhlIjxgW6IVgVWia8KswQFjzhsQNmqeyK598nzEZ+lDojCQochk+haEs1pN8k63iFIo7zNYkQS1IaGnwWnfndmgpVVXTG1Ip+ibs7fmJ6vDObxINg8PVRROAstiq8MqXBzCu+3F/DORlQ9xx2LqCXiqUXI/ZgSHGzCWPEqj2oWUEXXfINnadObgLS1UrBdZDPhXr9V/UdNbNlBwqJzPxo7JUsbLGtZSpglh7O9mozIeM0Sh+wH4F+t9fGDhy0zmwN1/P5ps4entNMaP/ItxnhsNlvcySgi4c/wqT+41BcrezZmxeHE8d1h5Ea/OqFUhzGQoiaYBWi0B6Gb+uVc40CAkD8Wdz5XZ1298wMo7OovQSWCVZLVpC7CJySO7RRO+IAzPoPFdBLG+e8POw8urf6nyfjZ+aBWTpZe/diB8TfGmi2vsrelbs+mcTzvPHswSWSdIj0fKKhXvzyNhplB7j18vaB9FDSDyTJLLxssvjmCsUGrYBbUsDW+fJPIx2C39H5DPj58j/jZJBxrl9qsFtFKzQwiUYJ4BpIdBxfeIppcsImwuhwzIPBBPPf+zJQyFI/rT586DfCSBnn9uVYCbcn704S/WK3AYHN/Q9ZbgtrgmHVU6oUucAfjyi2c0=
