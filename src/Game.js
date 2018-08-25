@@ -45,7 +45,9 @@ export default class Game {
 
   tick() {
     this.gameObjects.forEach((gameObject) => {
-      gameObject.tick();
+      if ('tick' in gameObject) {
+        gameObject.tick();
+      }
     });
   }
 

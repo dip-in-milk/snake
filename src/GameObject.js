@@ -47,10 +47,6 @@ export default class GameObject {
     Object.assign(this, this.constructor.getInitial(this));
   }
 
-  tick() {
-    throw new Error(`Method "tick" should be implemented for ${this.constructor.name}`);
-  }
-
   /**
    * Being killed by a gameObject
    * @returns undefined

@@ -2,6 +2,7 @@ import Game from '../../src/Game';
 import Player from '../../src/Player';
 import Snake from '../../src/Snake';
 import Pixel from '../../src/Pixel';
+import Fruit from '../../src/Fruit';
 
 jest.mock('../../src/Snake');
 jest.mock('../../src/Fruit');
@@ -44,11 +45,19 @@ describe('Game', () => {
   });
 
   describe('#tick', () => {
+    game.gameObjects = [
+      new Fruit(),
+      new Snake(),
+    ];
     game.tick();
 
-    it('should call player.tick() for each gameObject', () => {
+    it('should call player.tick() for each gameObject which has tick method', () => {
       game.gameObjects.forEach((gameObject) => {
-        expect(gameObject.tick).toBeCalled();
+        if (gameObject.tick) {
+          expect(gameObject.tick).toBeCalledWith();
+        } else {
+          expect(gameObject.tick).toBe(undefined);
+        }
       });
     });
   });

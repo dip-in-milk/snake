@@ -72,10 +72,4 @@ describe('GameObject', () => {
       });
     });
   });
-
-  describe('#tick', () => {
-    it('should throw an Error', () => {
-      expect(gameObject.tick).toThrowError();
-    });
-  });
 });
