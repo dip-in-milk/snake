@@ -53,37 +53,6 @@ describe('Game', () => {
     });
   });
 
-  describe('#start', () => {
-    beforeAll(() => {
-      jest.useFakeTimers();
-    });
-
-    it('should create interval', () => {
-      game.start();
-      expect(setInterval).toBeCalledWith(expect.any(Function), 300);
-    });
-
-    it('should call game.tick', () => {
-      game.start();
-      game.tick = jest.fn();
-      expect(game.tick).not.toBeCalled();
-      setInterval.mock.calls[0][0]();
-      expect(game.tick).toHaveBeenCalledTimes(1);
-      game.tick.mockRestore();
-    });
-  });
-
-  describe('#pause', () => {
-    beforeAll(() => {
-      jest.useFakeTimers();
-    });
-
-    it('should stop calling game.tick()', () => {
-      game.pause();
-      expect(clearInterval).toBeCalledWith(game.interval);
-    });
-  });
-
   describe('#join', () => {
     const player = new Player();
     beforeAll(() => {

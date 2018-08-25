@@ -2,8 +2,6 @@ import DIRECTION from './DIRECTION';
 import Snake from './Snake';
 import Fruit from './Fruit';
 
-const INTERVAL = 300;
-
 export default class Game {
   constructor(players) {
     this.gameObjects = [
@@ -49,14 +47,6 @@ export default class Game {
     this.gameObjects.forEach((gameObject) => {
       gameObject.tick();
     });
-  }
-
-  start() {
-    this.interval = setInterval(() => this.tick(), INTERVAL);
-  }
-
-  pause() {
-    clearInterval(this.interval);
   }
 
   /**
