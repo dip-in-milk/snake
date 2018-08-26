@@ -2,15 +2,39 @@ import Snake from '../../src/Snake';
 
 import Game from '../../src/Game';
 import GameObject from '../../src/GameObject';
+import Sprite from '../../src/Sprite';
+import Pixel from '../../src/Pixel';
 
 jest.mock('../../src/Pixel');
+jest.mock('../../src/Sprite');
 jest.mock('../../src/Game');
+jest.mock('../../src/GameObject');
 
-const mockGame = new Game();
+// Pixel.create = jest.fn().mockReturnValue(Object.assign(new Pixel(), {
+//   x: 25,
+//   y: 25,
+// }));
+
+const mockGame = Object.assign(new Game(), {
+  gameObjects: [],
+  world: {
+    width: 50,
+    height: 50,
+  },
+});
 
 describe('Snake', () => {
   const snake = new Snake({
     game: mockGame,
+  });
+  Object.assign(snake, {
+    game: mockGame,
+  });
+  snake.sprite = Object.assign(new Sprite(), {
+    pixels: new Array(3).fill().map((v, i) => Object.assign(new Pixel(), {
+      x: 3 * i,
+      y: 3,
+    })),
   });
 
   describe('#getControls', () => {
@@ -48,7 +72,7 @@ describe('Snake', () => {
 
     it('should check for object collision', () => {
       snake.tick();
-      expect(snake.player.game.getObjectsOnPixels).toBeCalledWith(snake.sprite);
+      expect(snake.player.game.getObjectsOnPixels).toBeCalledWith(snake.sprite.pixels);
     });
 
     describe('if collision occurs', () => {

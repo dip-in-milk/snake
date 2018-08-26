@@ -1,29 +1,29 @@
 import Player from '../../src/Player';
 import Game from '../../src/Game';
-import ControllableGameObject from '../../src/ControllableGameObject';
 
 jest.mock('../../src/Game');
 jest.mock('../../src/ControllableGameObject');
 
-const mockGame = new Game();
-const mockGameObject = new ControllableGameObject();
+const game = new Game();
 
 describe('Player', () => {
-  const player = new Player();
+  const player = new Player(game);
 
-  describe('#join', () => {
-    player.join(mockGame, mockGameObject);
-    it('should be assigned to a game', () => {
-      expect(player).toHaveProperty('game', mockGame);
+  describe('#constructor', () => {
+    it('should have game', () => {
+      expect(player).toHaveProperty('game', game);
     });
 
-    it('should be given a gameObject', () => {
-      expect(player).toHaveProperty('gameObject', mockGameObject);
+    it('should call game.join', () => {
+      expect(game.join).toBeCalledWith(player);
     });
   });
 
   describe('#getControls', () => {
     it('should call player.gameObject.getControls', () => {
+      player.gameObject = {
+        getControls: jest.fn(),
+      };
       player.getControls();
       expect(player.gameObject.getControls).toBeCalled();
     });

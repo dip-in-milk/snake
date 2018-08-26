@@ -1,35 +1,52 @@
 import Game from '../../src/Game';
 import Player from '../../src/Player';
 import Snake from '../../src/Snake';
-import Pixel from '../../src/Pixel';
 import Fruit from '../../src/Fruit';
+import Sprite from '../../src/Sprite';
+import Pixel from '../../src/Pixel';
 
 jest.mock('../../src/Snake');
 jest.mock('../../src/Fruit');
 jest.mock('../../src/Player');
 
-const game = new Game([
-  new Player(),
-  new Player(),
-]);
+const game = new Game(20, 20);
+const player = new Player(game);
 
 beforeAll(() => {
-  game.gameObjects.forEach((gameObject, i) => {
-    Object.defineProperty(gameObject, 'sprite', {
-      value: [{
-        x: i * 10,
-        y: i * 10,
-      }],
+  game.gameObjects.forEach((go, i) => {
+    const mockSprite = new Sprite();
+    mockSprite.pixels = [
+      new Pixel(i * 2, 0),
+    ];
+    Object.defineProperty(go, 'sprite', {
+      value: mockSprite,
     });
   });
 });
 
 describe('Game', () => {
+  describe('#constructor', () => {
+    it('should define gameObjects', () => {
+      expect(game).toHaveProperty('gameObjects', expect.any(Array));
+    });
+
+    it('should define players', () => {
+      expect(game).toHaveProperty('players', expect.any(Array));
+    });
+
+    it('should define world', () => {
+      expect(game).toHaveProperty('world', expect.objectContaining({
+        width: expect.any(Number),
+        height: expect.any(Number),
+      }));
+    });
+  });
+
   describe('#getObjectsOnPixels', () => {
     it('should filter all game.gameObjects to find objects at given pixels', () => {
       expect(game.getObjectsOnPixels([{
-        x: 10,
-        y: 10,
+        x: 0,
+        y: 0,
       }])).toEqual(expect.arrayContaining([
         expect.any(Snake),
       ]));
@@ -46,12 +63,13 @@ describe('Game', () => {
 
   describe('#tick', () => {
     game.gameObjects = [
-      new Fruit(),
       new Snake(),
+      new Fruit(),
     ];
-    game.tick();
 
     it('should call player.tick() for each gameObject which has tick method', () => {
+      game.gameObjects[0].tick = jest.fn();
+      game.tick();
       game.gameObjects.forEach((gameObject) => {
         if (gameObject.tick) {
           expect(gameObject.tick).toBeCalledWith();
@@ -63,28 +81,25 @@ describe('Game', () => {
   });
 
   describe('#join', () => {
-    const player = new Player();
     beforeAll(() => {
-      player.join = jest.fn((g, go) => {
-        player.game = g;
-        player.gameObject = go;
-      });
+      jest.spyOn(game.players, 'push');
+      jest.spyOn(Object, 'assign');
       game.join(player);
     });
-    it('should call player.join with game and a new Snake', () => {
-      expect(player.join).toBeCalledWith(game, expect.any(Snake));
+    it('should push player to the pool', () => {
+      expect(game.players.push).toBeCalledWith(player);
     });
-    it('should keep reference to the player', () => {
-      expect(game.players).toContain(player);
-    });
-    it('should keep reference to it`s GameObject', () => {
-      expect(game.gameObjects).toContain(player.gameObject);
+
+    it('should assign player.gameObject', () => {
+      expect(Object.assign).toBeCalledWith(player, {
+        gameObject: expect.any(Snake),
+      });
     });
   });
 
   describe('#leave', () => {
-    const player = new Player();
     beforeAll(() => {
+      game.players = [];
       game.join(player);
       game.leave(player);
     });
@@ -95,40 +110,6 @@ describe('Game', () => {
 
     it('should not contain player`s GameObject within the gameObjects', () => {
       expect(game.gameObjects).not.toContain(player.gameObject);
-    });
-  });
-
-  describe('#placeSprite', () => {
-    const mockGameObject = {
-      sprite: [
-        new Pixel(),
-      ],
-    };
-
-    beforeAll(() => {
-      game.gameObjects = [];
-    });
-    beforeEach(() => {
-      game.getObjectsOnPixels = jest.fn()
-        .mockReturnValue(false)
-        .mockReturnValueOnce(true);
-    });
-
-    it('should call Game.getObjectsOnPixels to check for empty space', () => {
-      game.placeSprite(mockGameObject);
-      expect(game.getObjectsOnPixels).toBeCalledWith(mockGameObject.sprite);
-    });
-
-    describe('if place is occupied', () => {
-      it('should shift the sprite', () => {
-        mockGameObject.sprite.shift = jest.fn();
-        game.placeSprite(mockGameObject);
-        expect(mockGameObject.sprite.shift).toBeCalledWith(
-          expect.arrayContaining([
-            expect.any(Number),
-          ]),
-        );
-      });
     });
   });
 });

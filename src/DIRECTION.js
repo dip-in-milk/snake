@@ -1,3 +1,8 @@
+// class Direction extends Array {
+//   getOpposite() {
+//     return this.map(v => v * -1);
+//   }
+// }
 
 const DIRECTION = {
   UP: [0, -1],

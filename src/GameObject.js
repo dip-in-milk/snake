@@ -1,5 +1,6 @@
 import DIRECTION from './DIRECTION';
-import Pixel from './Pixel';
+import Sprite from './Sprite';
+import Pixel, { PLACEMENT } from './Pixel';
 
 export const FRIENDS = {
   Snake: ['Fruit'],
@@ -7,17 +8,17 @@ export const FRIENDS = {
 
 export const INITIAL = {
   Snake: {
-    legnth: 4,
+    length: 4,
     direction: DIRECTION.UP,
     bounty: 100,
   },
   Fruit: {
-    legnth: 1,
+    length: 1,
     direction: DIRECTION.NULL,
     bounty: 100,
   },
   GameObject: {
-    legnth: 0,
+    length: 0,
     direction: DIRECTION.NULL,
     bounty: 100,
   },
@@ -28,23 +29,22 @@ export const INITIAL = {
  */
 export default class GameObject {
   static getInitial(gameObject) {
-    const initial = INITIAL[gameObject.constructor.name];
-    initial.sprite = new Array(initial.legnth)
-      .fill()
-      .map((v, i, arr) => {
-        try {
-          const pixel = arr[i - 1];
-          return pixel.createSibling(initial.direction);
-        } catch (err) {
-          return new Pixel();
-        }
-      });
-    return initial;
+    return INITIAL[gameObject.constructor.name];
   }
 
   constructor(game) {
     this.game = game;
     Object.assign(this, this.constructor.getInitial(this));
+    game.gameObjects.push(this);
+    this.sprite = Sprite.create(this.length, this.getInitialPixel(), this.direction);
+  }
+
+  /**
+   * Creates initial pixel for GameObject
+   * @returns {Pixel}
+   */
+  getInitialPixel() {
+    return Pixel.create(this.game, PLACEMENT.CENTER);
   }
 
   /**
@@ -52,7 +52,7 @@ export default class GameObject {
    * @returns undefined
    */
   die() {
-    this.sprite = [];
+    this.sprite.pixels = [];
     this.direction = DIRECTION.NULL;
   }
 

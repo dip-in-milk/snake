@@ -1,7 +1,7 @@
 export default class Player {
-  join(game, gameObject) {
+  constructor(game) {
     this.game = game;
-    this.gameObject = gameObject;
+    game.join(this);
   }
 
   getControls() {

@@ -1,23 +1,39 @@
-import GameObject from '../../src/GameObject';
+import GameObject, { FRIENDS } from '../../src/GameObject';
 import Game from '../../src/Game';
+import Sprite from '../../src/Sprite';
 
 jest.mock('../../src/Game');
 
 const mockGame = new Game();
+mockGame.gameObjects = [];
+mockGame.world = {
+  width: 100,
+  height: 100,
+};
 const gameObject = new GameObject(mockGame);
 const anotherGameObject = new GameObject(mockGame);
 
+// beforeAll(() => {
+//   mockGame.world = {
+//     width: 100,
+//     height: 100,
+//   };
+// });
+
 describe('GameObject', () => {
   describe('#constructor', () => {
+    it('should define GameObject.game', () => {
+      expect(gameObject).toHaveProperty('game', expect.any(Game));
+    });
     it('should define GameObject.sprite', () => {
-      expect(gameObject).toHaveProperty('sprite');
+      expect(gameObject).toHaveProperty('sprite', expect.any(Sprite));
     });
   });
 
   describe('#die', () => {
     gameObject.die();
     it('should clear it`s sprite', () => {
-      expect(gameObject.sprite).toHaveLength(0);
+      expect(gameObject.sprite.pixels).toHaveLength(0);
     });
 
     it('should reset it`s direction', () => {
@@ -70,6 +86,20 @@ describe('GameObject', () => {
         gameObject.collide(nonFriendlyGameObject);
         expect(gameObject.die).toBeCalledWith(nonFriendlyGameObject);
       });
+    });
+  });
+
+  describe('#isFriendly', () => {
+    it('should check FRIENDS array to see if is friendly', () => {
+      FRIENDS[gameObject.constructor.name] = [
+        'Fruit',
+      ];
+      expect(gameObject.isFriendly(gameObject)).toEqual(false);
+      expect(gameObject.isFriendly({
+        constructor: {
+          name: 'Fruit',
+        },
+      })).toEqual(true);
     });
   });
 });

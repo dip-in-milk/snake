@@ -58,7 +58,7 @@
     },
     "testEnvironment": "node",
     "testMatch": [
-      "<rootDir>/test/spec/**/*.js"
+      "<rootDir>/test/!(mock|fixture)/**/*.js"
     ],
     "verbose": true
   }

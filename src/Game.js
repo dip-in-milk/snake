@@ -1,25 +1,21 @@
-import DIRECTION from './DIRECTION';
 import Snake from './Snake';
-import Fruit from './Fruit';
 
 export default class Game {
-  constructor(players) {
-    this.gameObjects = [
-      new Fruit(),
-    ];
+  constructor(width, height) {
+    this.gameObjects = [];
     this.players = [];
     this.world = {
-      width: 20,
-      height: 20,
+      width,
+      height,
     };
-    players.forEach(player => this.join(player));
   }
 
   join(player) {
-    const snake = new Snake(player);
-    player.join(this, snake);
+    const gameObject = new Snake(player);
     this.players.push(player);
-    this.gameObjects.push(snake);
+    Object.assign(player, {
+      gameObject,
+    });
   }
 
   leave(player) {
@@ -31,13 +27,17 @@ export default class Game {
     ];
   }
 
-  getObjectsOnPixels(pixels) {
+  getObjectsOnPixels(sprite) {
     return this.gameObjects
-      .filter(gameObject => gameObject.sprite
-        .find(pixel => pixels
+      .filter(gameObject => gameObject.sprite.pixels
+        .find(pixel => sprite
           .find(({ x, y }) => x === pixel.x && y === pixel.y)));
   }
 
+  /**
+   * Returns last Sprite state for all GameObjects
+   * @returns {Array<Sprite>} Array of Sprites for each game object
+   */
   getLastState() {
     return this.gameObjects
       .map(gameObject => gameObject.sprite);
@@ -49,16 +49,5 @@ export default class Game {
         gameObject.tick();
       }
     });
-  }
-
-  /**
-   * Returns free location in the game for the GameObject
-   * @param {GameObject} gameObject
-   * @returns {Sprite}
-   */
-  placeSprite({ sprite }) {
-    while (this.getObjectsOnPixels(sprite)) {
-      sprite.shift(DIRECTION.RIGHT);
-    }
   }
 }
