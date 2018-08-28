@@ -1,7 +1,6 @@
 image: node:latest
 
 cache:
-  untracked: true
   paths:
     - node_modules/
 
@@ -13,13 +12,7 @@ stages:
 dependencies:
   stage: setup
   script:
-    - npm i -g npm@latest
     - npm i
-
-# lint:
-#   stage: build
-#   script:
-#     - npm run lint
 
 test:
   stage: build
