@@ -1,4 +1,4 @@
-# Snake Game Engine
+# <img src="https://raw.githubusercontent.com/dip-in-milk/snake-logo/master/src/Engine.svg?sanitize=true" height="100" alt="Snake Engine Logo">
 
 [![NPM version][npm-img]][npm-url]
 [![Build Status][build-img]][build-url]
