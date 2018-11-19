@@ -1,11 +1,17 @@
-export const PLACEMENT = {
-  RANDOM: 1,
-  CENTER: 2,
-  GIVEN: 3,
-  ZERO: 4,
-};
+import Game from './Game';
+import { Distance } from './distance';
+
+export const enum PLACEMENT {
+  RANDOM,
+  CENTER,
+  FIXED,
+  ZERO,
+}
 
 export default class Pixel {
+  x: number;
+  y: number;
+
   constructor(x, y) {
     this.x = x;
     this.y = y;
@@ -13,22 +19,18 @@ export default class Pixel {
 
   /**
    * Creates a new pixel in the given distance
-   * @param {Pixel} pixel Initial pixel
-   * @param {Array<Number, Number>} distance distance from the inital pixel
-   * @returns {Pixel}
    */
-  static createSibling(pixel, [x, y]) {
-    return new this.constructor(pixel.x + x, pixel.y + y);
+  static createSibling(shape: Pixel, [x, y]: Distance): Pixel {
+    return new Pixel(shape.x + x, shape.y + y);
   }
 
   /**
    * Creates pixel within the game
-   * @param {Game} game Game
-   * @param {STRATEGY} placement placement Strategy
    * @returns {Pixel}
    */
-  static create(game, placement = PLACEMENT.RANDOM) {
-    let { x, y } = game;
+  static create(game: Game, placement: PLACEMENT = PLACEMENT.RANDOM): Pixel {
+    let x;
+    let y;
     switch (placement) {
       case PLACEMENT.RANDOM:
         x = Math.floor(Math.random() * game.world.width);
@@ -42,14 +44,16 @@ export default class Pixel {
         x = 0;
         y = 0;
         break;
-      case PLACEMENT.GIVEN:
-      default:
+      case PLACEMENT.FIXED:
         break;
     }
-    return new this.constructor(x, y);
+    return new Pixel(x, y);
   }
 
-  static move(pixel, [x, y]) {
+  /**
+   * Moves shape with Distance
+   */
+  static move(pixel: Pixel, [x, y]: Distance) {
     Object.assign(pixel, {
       x: pixel.x + x,
       y: pixel.y + y,
@@ -58,10 +62,8 @@ export default class Pixel {
 
   /**
    * Returns relative distance to another pixel
-   * @param {Pixel} pixel
-   * @returns {Array<Number, Number>} relative distance
    */
-  static getRelativeDistance(pixel1, pixel2) {
+  static getRelativeDistance(pixel1: Pixel, pixel2: Pixel): Distance {
     return [
       pixel2.x - pixel1.x,
       pixel2.y - pixel1.y,

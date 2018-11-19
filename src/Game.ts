@@ -1,33 +1,39 @@
 import Snake from './Snake';
+import Player from './Player';
+import Pixel from './Pixel';
+
+interface World {
+  width: number;
+  height: number;
+}
 
 export default class Game {
-  constructor(width, height) {
-    this.gameObjects = [];
-    this.players = [];
+
+  gameObjects = [];
+  players: Player[] = [];
+  world: World;
+
+  constructor(width: number, height: number) {
     this.world = {
       width,
       height,
     };
   }
 
-  join(player) {
+  join(player: Player) {
     const gameObject = new Snake(player);
     this.players.push(player);
-    Object.assign(player, {
-      gameObject,
-    });
+    player.gameObject = gameObject;
   }
 
   leave(player) {
-    delete this.gameObjects[
-      this.gameObjects.findIndex(go => go === player.gameObject)
-    ];
-    delete this.players[
-      this.players.findIndex(pl => pl === player)
-    ];
+    delete this.gameObjects[this.gameObjects.findIndex(go => go === player.gameObject)
+];
+    delete this.players[this.players.findIndex(pl => pl === player)
+];
   }
 
-  getObjectsOnPixels(sprite) {
+  getObjectsOnPixels(sprite): Pixel[] {
     return this.gameObjects
       .filter(gameObject => gameObject.sprite.pixels
         .find(pixel => sprite
@@ -36,9 +42,8 @@ export default class Game {
 
   /**
    * Returns last Sprite state for all GameObjects
-   * @returns {Array<Sprite>} Array of Sprites for each game object
    */
-  getLastState() {
+  getLastState(): Pixel[] {
     return this.gameObjects
       .map(gameObject => gameObject.sprite);
   }

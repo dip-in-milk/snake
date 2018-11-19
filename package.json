@@ -5,7 +5,9 @@
   "main": "src/index.js",
   "scripts": {
     "start": "node --inspect ./node_modules/jest/bin/jest --watch --color --verbose=false",
-    "lint": "eslint --color --ignore-path .gitignore .",
+    "lint": "tslint --project .",
+    "prebuild": "rimraf build",
+    "build": "tsc",
     "pretest": "npm run lint",
     "test": "jest --color"
   },
@@ -30,10 +32,11 @@
     "@babel/runtime": "^7.1.5",
     "babel-core": "^7.0.0-bridge.0",
     "coveralls": "^3.0.2",
-    "eslint": "^5.9.0",
-    "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-plugin-import": "^2.14.0",
-    "jest": "^23.6.0"
+    "jest": "^23.6.0",
+    "rimraf": "^2.6.2",
+    "tslint": "^5.11.0",
+    "tslint-config-airbnb": "^5.11.1",
+    "typescript": "^3.1.6"
   },
   "jest": {
     "collectCoverage": true,
@@ -53,5 +56,6 @@
       "<rootDir>/test/!(mock|fixture)/**/*.js"
     ],
     "verbose": true
-  }
+  },
+  "dependencies": {}
 }

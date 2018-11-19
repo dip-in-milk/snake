@@ -1,22 +1,24 @@
 import Pixel, { PLACEMENT } from './Pixel';
-import DIRECTION from './DIRECTION';
+import Direction from './Direction';
+import Velocity from './Velocity';
 
 export default class Sprite {
-  constructor(pixels = []) {
+  pixels: Pixel[];
+
+  constructor(pixels: Pixel[] = []) {
     this.pixels = pixels;
   }
 
   /**
    * Creates an array from given props
    * @param {Number} length amount of pixels in the Sprite
-   * @param {Pixel} pixel initial pixel position
-   * @param {DIRECTION} direction direction of the pixels
    * @returns {Sprite}
    */
-  static create(length, { x, y }, direction = DIRECTION.DOWN) {
-    const pixels = [Pixel.create({ x, y }, PLACEMENT.GIVEN)];
+  static create(length, { x, y }: Pixel, direction: Direction = Direction.DOWN) {
+    const pixels = [Pixel.create({ x, y }, PLACEMENT.FIXED)];
     while (pixels.length < length) {
-      pixels.push(Pixel.createSibling(pixels[pixels.length - 1], direction));
+      const distance = new Velocity(direction).getDistance();
+      pixels.push(Pixel.createSibling(pixels[pixels.length - 1], distance));
     }
     return new this(pixels);
   }

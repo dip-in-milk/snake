@@ -1,27 +1,29 @@
-import DIRECTION from './DIRECTION';
+import Direction from './Direction';
 import GameObject from './GameObject';
+import distance from './distance';
+import Velocity from './Velocity';
 
 export default class ControllableGameObject extends GameObject {
   getControls() {
     return [{
       label: 'up',
       method: () => {
-        this.direction = DIRECTION.UP;
+        this.velocity.direction = Direction.UP;
       },
     }, {
       label: 'down',
       method: () => {
-        this.direction = DIRECTION.DOWN;
+        this.velocity.direction = Direction.DOWN;
       },
     }, {
       label: 'left',
       method: () => {
-        this.direction = DIRECTION.LEFT;
+        this.velocity.direction = Direction.LEFT;
       },
     }, {
       label: 'right',
       method: () => {
-        this.direction = DIRECTION.RIGHT;
+        this.velocity.direction = Direction.RIGHT;
       },
     }];
   }
